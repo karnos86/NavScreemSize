@@ -16,7 +16,7 @@ export interface Ipage{
 })
 export class MenuPage {
   isDesktop:boolean;
-  rootPage='TabsPage'
+  rootPage:string;
   @ViewChild(Nav) nav:Nav;
 
   pages: Ipage[] = [
@@ -31,7 +31,7 @@ export class MenuPage {
     private screemsize: ScreemsizeProvider) {
       screemsize.isDesktopView().subscribe(isDesktop=>{
         this.isDesktop = isDesktop;
-        console.log(isDesktop);
+        this.rootPage = isDesktop == true ? this.pages[0].pageName : 'TabsPage'
       });
   }
 

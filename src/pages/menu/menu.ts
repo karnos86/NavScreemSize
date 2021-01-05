@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Nav, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, MenuController, Nav, NavController, NavParams } from 'ionic-angular';
 import { ScreemsizeProvider } from '../../providers/screemsize/screemsize';
 
 export interface Ipage{
@@ -17,20 +17,25 @@ export interface Ipage{
 export class MenuPage {
   isDesktop:boolean;
   rootPage:string;
+  typeMenu:string;
+
   @ViewChild(Nav) nav:Nav;
 
   pages: Ipage[] = [
     {title:'Page 1', pageName:'Pag1Page', tabsComponent:'Pag1Page', index:0, icon:'home'},
     {title:'Page 2', pageName:'Pag2Page', tabsComponent:'Pag2Page', index:1, icon:'contacts'},
-    {title:'Page 1', pageName:'SpecialPage', icon:'add'}
+    {title:'SpecialPage', pageName:'SpecialPage', icon:'add'}
   ];
  
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private screemsize: ScreemsizeProvider) {
+    screemsize: ScreemsizeProvider,
+    private menuCtrl:MenuController) {
       screemsize.isDesktopView().subscribe(isDesktop=>{
-        this.isDesktop = isDesktop;
+        console.log(isDesktop);
+        this.isDesktop = isDesktop
+        isDesktop == true ? this.menuCtrl.open() : this.menuCtrl.close();
         this.rootPage = isDesktop == true ? this.pages[0].pageName : 'TabsPage'
       });
   }
@@ -41,6 +46,8 @@ export class MenuPage {
     if(page.index){
       params = {tabIndex:page.index}
     }
+
+    console.log(this.navCtrl.getViews())
 
     if(this.nav.getActiveChildNavs()[0] && page.index != undefined && !this.isDesktop ){
       this.nav.getActiveChildNavs()[0].select(page.index);

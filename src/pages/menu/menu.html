@@ -1,4 +1,4 @@
-<ion-menu [content]=content>
+<ion-menu type="push" [content]=content>
   <ion-header>
     <ion-navbar>
       <ion-title>menu</ion-title>
@@ -7,7 +7,7 @@
   
   <ion-content>
     <ion-list>
-      <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
         {{p.title}}
       </button>
